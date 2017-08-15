@@ -26,7 +26,7 @@ class Out
     hockeyapp_payload[:status] = downloadable ? 2 : 1
     hockeyapp_payload[:release_type] = release_type.to_i
     if notes_file
-        hockeyapp_payload[:notes] = File.read(notes_file)
+        hockeyapp_payload[:notes] = File.read("#{@args[0]}/#{notes_file}")
         hockeyapp_payload[:notes_type] = notes_type
     end
 
