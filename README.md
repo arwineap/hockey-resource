@@ -18,6 +18,9 @@ a path to the binary to be uploaded.
 
 * `path`: *Required.* Path to the binary to upload.
 * `downloadable`: *Optional.* If `true` the new version will be made available for download.
+* `release_type`: *Optional.* Set the release type of the app; 2: alpha, 0: beta, 1: store, 3: enterprise
+* `notes_file`: *Optional.* The file where your release notes are posted from
+* `notes_type`: *Optional.* The format of your notes_file. Allowed options are Textile and Markdown. Markdown is default
 
 ### `in`: Download an app binary for a given version
 

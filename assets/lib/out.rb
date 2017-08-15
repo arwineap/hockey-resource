@@ -18,9 +18,20 @@ class Out
     path = json["params"]["path"]
     downloadable = json["params"]["downloadable"]
     release_type = json["params"]["release_type"] || 0
+    notes_file = json["params"]["notes_file"]
+    notes_type = json["params"]["notes_type"] || "markdown"
+
+    hockeyapp_payload = Hash.new
+    hockeyapp_payload[:ipa] = @file_system.get("#{@args[0]}/#{path}")
+    hockeyapp_payload[:status] = downloadable ? 2 : 1
+    hockeyapp_payload[:release_type] = release_type.to_i
+    if notes_file
+        hockeyapp_payload[:notes] = File.read(notes_file)
+        hockeyapp_payload[:notes_type] = notes_type
+    end
 
     response = @rest_client.post("https://rink.hockeyapp.net/api/2/apps/#{app_id}/app_versions/upload",
-      { :ipa => @file_system.get("#{@args[0]}/#{path}"), :status => downloadable ? 2 : 1, :release_type => release_type.to_i },
+      hockeyapp_payload,
       { "X-HockeyAppToken" => token })
 
     version = JSON.parse(response)
